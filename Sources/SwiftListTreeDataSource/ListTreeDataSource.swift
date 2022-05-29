@@ -103,6 +103,24 @@ open class ListTreeDataSource<ItemIdentifierType> where ItemIdentifierType : Has
         }
     }
     
+    /// Adds an `item` to specified `parent`.
+    /// - Parameters:
+    ///   - item: The array of items to add.
+    ///   - parent: The optional parent.
+    public func append(_ item: ItemIdentifierType, to parent: ItemIdentifierType? = nil) -> TreeItem<ItemIdentifierType> {
+        func append(item: ItemIdentifierType, into insertionArray: inout [TreeItemType], parentBackingItem: TreeItemType?) -> TreeItem<ItemIdentifierType> {
+            let treeItem =  TreeItem(value: item, parent: parentBackingItem)
+            cacheTreeItems([treeItem])
+            insertionArray.append(contentsOf: [treeItem])
+            return treeItem
+        }
+
+        if let parent = parent, let parentBackingItem = self.lookupTable[parent] {
+            return append(item: item, into: &parentBackingItem.subitems, parentBackingItem: parentBackingItem)
+        }
+        return append(item: item, into: &backingStore, parentBackingItem: nil)
+    }
+        
     /// Inserts the array of`items` after specified `item`.
     /// - Parameters:
     ///   - items: The array of items to insert.
@@ -151,6 +169,7 @@ open class ListTreeDataSource<ItemIdentifierType> where ItemIdentifierType : Has
     public func lookup(_ item: ItemIdentifierType) -> TreeItemType? {
         return self.lookupTable[item]
     }
+    
     
     // MARK: - Helpers
     
