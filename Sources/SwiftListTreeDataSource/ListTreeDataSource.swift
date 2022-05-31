@@ -170,6 +170,14 @@ open class ListTreeDataSource<ItemIdentifierType> where ItemIdentifierType : Has
         return self.lookupTable[item]
     }
     
+    public func find(_ closure: (_ element: TreeItemType) -> Bool) -> TreeItemType? {
+        for item in self.allItemSet {
+            if closure(item) {
+                return item
+            }
+        }
+        return nil
+    }
     
     // MARK: - Helpers
     
