@@ -8,7 +8,7 @@
 import Foundation
 
 open class TreeItem<Item: Hashable>: Hashable, Identifiable {
-    public let id = UUID()
+    public let id: UUID
     public fileprivate(set) var value: Item
     public fileprivate(set) var subitems: [TreeItem]
     public fileprivate(set) weak var parent: TreeItem?
@@ -19,7 +19,8 @@ open class TreeItem<Item: Hashable>: Hashable, Identifiable {
     /// Indicates the nest level.
     public fileprivate(set) var level: Int = 0
     
-    init(value: Item, parent: TreeItem?, items: [TreeItem] = []) {
+    init(id: UUID = UUID(), value: Item, parent: TreeItem?, items: [TreeItem] = []) {
+        self.id = id
         self.value = value
         self.parent = parent
         self.subitems = items
