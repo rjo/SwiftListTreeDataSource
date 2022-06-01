@@ -180,6 +180,23 @@ open class ListTreeDataSource<ItemIdentifierType> where ItemIdentifierType : Has
         return nil
     }
     
+    public func itemsWithLevel(_ level: Int, in item: TreeItemType?=nil) -> [TreeItemType] {
+        var root: [TreeItemType]?
+        var result: [TreeItemType] = []
+        
+        if let parent = item {
+            root = parent.subitems
+        } else {
+            root = backingStore
+        }
+        for item in root! {
+            if item.level == level {
+                result.append(item)
+            }
+        }
+        return result
+    }
+    
     // MARK: - Helpers
     
     private func cacheTreeItems(_ treeItems: [TreeItemType]) {
