@@ -19,7 +19,7 @@ open class TreeItem<Item: Hashable>: Hashable, Identifiable {
     /// Indicates the nest level.
     public fileprivate(set) var level: Int = 0
     
-    init(id: UUID = UUID(), value: Item, parent: TreeItem?, items: [TreeItem] = []) {
+    public init(id: UUID = UUID(), value: Item, parent: TreeItem?, items: [TreeItem] = []) {
         self.id = id
         self.value = value
         self.parent = parent
