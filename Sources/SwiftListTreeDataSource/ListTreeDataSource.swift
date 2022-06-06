@@ -108,9 +108,9 @@ open class ListTreeDataSource<ItemIdentifierType> where ItemIdentifierType : Has
     /// - Parameters:
     ///   - item: The array of items to add.
     ///   - parent: The optional parent.
-    public func append(_ item: ItemIdentifierType, to parent: ItemIdentifierType? = nil) -> TreeItem<ItemIdentifierType> {
+    public func append(_ item: ItemIdentifierType, id: UUID=UUID(), to parent: ItemIdentifierType? = nil) -> TreeItem<ItemIdentifierType> {
         func append(item: ItemIdentifierType, into insertionArray: inout [TreeItemType], parentBackingItem: TreeItemType?) -> TreeItem<ItemIdentifierType> {
-            let treeItem =  TreeItem(value: item, parent: parentBackingItem)
+            let treeItem =  TreeItem(id: id, value: item, parent: parentBackingItem)
             cacheTreeItems([treeItem])
             insertionArray.append(contentsOf: [treeItem])
             return treeItem
